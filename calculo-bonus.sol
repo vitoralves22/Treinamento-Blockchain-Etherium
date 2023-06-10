@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: MIT
+// Endereço 0xBde6f445B0eAd01a1B6766DF5905B9E7881dA31c
+
 pragma solidity 0.8.20;
 
 contract CalculoBonusVendedor {
-    // Endereço 0xBde6f445B0eAd01a1B6766DF5905B9E7881dA31c
     // Variáveis públicas
     string public nomeVendedor;
     uint256 public fatorBonus;
