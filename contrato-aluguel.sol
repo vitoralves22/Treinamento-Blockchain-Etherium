@@ -12,14 +12,13 @@ contract ContratoAluguel {
         locador = _locador;
         locatario = _locatario;
 
-        // Define o valor inicial do aluguel para cada mês
         for (uint i = 0; i < 36; i++) {
             valoresAluguel[i] = valorInicialAluguel;
         }
     }
 
     function valorAluguel(uint256 mes) public view returns (uint256) {
-        return valoresAluguel[mes - 1]; // Meses são 0-indexados no array
+        return valoresAluguel[mes - 1];
     }
 
     function getNomes() public view returns (string memory, string memory) {
