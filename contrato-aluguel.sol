@@ -11,17 +11,17 @@ contract ContratoAluguel {
     Pessoa public locador;
     Pessoa public locatario;
     uint256[36] public valoresAluguel;
-    address public owner;
+    address public proprietario;
 
-    modifier onlyOwner() {
-        require(msg.sender == owner, "Somente o proprietario pode chamar essa funcao.");
+    modifier onlyProprietario() {
+        require(msg.sender == proprietario, "Somente o proprietario pode chamar essa funcao.");
         _;
     }
 
     constructor(string memory _nomeLocador, string memory _nomeLocatario, uint256 valorInicialAluguel) {
         locador = Pessoa(_nomeLocador);
         locatario = Pessoa(_nomeLocatario);
-        owner = msg.sender;
+        proprietario = msg.sender;
 
         for (uint i = 0; i < 36; i++) {
             valoresAluguel[i] = valorInicialAluguel;
@@ -37,7 +37,7 @@ contract ContratoAluguel {
         return (locador.nome, locatario.nome);
     }
 
-    function alteraNome(uint8 tipoPessoa, string memory novoNome) public onlyOwner {
+    function alteraNome(uint8 tipoPessoa, string memory novoNome) public onlyProprietario {
         require(tipoPessoa == 1 || tipoPessoa == 2, "Tipo de pessoa invalido.");
 
         if (tipoPessoa == 1) {
@@ -47,7 +47,7 @@ contract ContratoAluguel {
         }
     }
 
-    function reajustaAluguel(uint256 mesInicio, uint256 valorReajuste) public onlyOwner {
+    function reajustaAluguel(uint256 mesInicio, uint256 valorReajuste) public onlyProprietario {
         require(mesInicio > 0 && mesInicio <= 36, "Mes de inicio invalido.");
 
         for (uint i = mesInicio - 1; i < 36; i++) {
