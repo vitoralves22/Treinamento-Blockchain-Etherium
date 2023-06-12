@@ -57,7 +57,7 @@ contract ContratoAluguel {
     }
 
     function pagarAluguel(uint256 mes) public {
-        require(!pagamentos[mes - 1], "Aluguel deste mês já foi pago.");
+        require(!pagamentos[mes - 1], "Aluguel deste mes ja foi pago.");
         pagamentos[mes - 1] = true;
     }
 
