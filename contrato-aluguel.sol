@@ -11,6 +11,7 @@ contract ContratoAluguel {
     Pessoa public locador;
     Pessoa public locatario;
     uint256[36] public valoresAluguel;
+    mapping (uint256 => bool) public pagamentos;
     address public proprietario;
 
     modifier onlyProprietario() {
@@ -25,6 +26,7 @@ contract ContratoAluguel {
 
         for (uint i = 0; i < 36; i++) {
             valoresAluguel[i] = valorInicialAluguel;
+            pagamentos[i] = false;
         }
     }
 
@@ -53,5 +55,14 @@ contract ContratoAluguel {
         for (uint i = mesInicio - 1; i < 36; i++) {
             valoresAluguel[i] += valorReajuste;
         }
+    }
+
+    function pagarAluguel(uint256 mes) public {
+        require(!pagamentos[mes - 1], "Aluguel deste mês já foi pago.");
+        pagamentos[mes - 1] = true;
+    }
+
+    function verificarPagamento(uint256 mes) public view returns (bool) {
+        return pagamentos[mes - 1];
     }
 }
