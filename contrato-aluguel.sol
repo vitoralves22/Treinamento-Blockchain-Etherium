@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// Endereço: 0xacD2a3a00293D3be18E7c5A9e597c3d7C071fd79
+// Endereço: 0x6FE78124f36d5170671d18BC26C5C7273960D07B
 
 pragma solidity 0.8.20;
 
@@ -26,6 +26,7 @@ contract ContratoAluguel is Ownable {
     Pessoa public locatario;
     uint256[36] public valoresAluguel;
     mapping (uint256 => bool) public pagamentos;
+    mapping (uint256 => bytes32) public provasPagamento;
 
     constructor(string memory _nomeLocador, string memory _nomeLocatario, address _enderecoLocador, uint256 valorInicialAluguel) {
         locador = Pessoa(_nomeLocador, _enderecoLocador);
@@ -50,9 +51,9 @@ contract ContratoAluguel is Ownable {
         require(tipoPessoa == 1 || tipoPessoa == 2, "Tipo de pessoa invalido.");
 
         if (tipoPessoa == 1) {
-            locador.nome = string(abi.encodePacked(keccak256(bytes(novoNome))));
+            locador.nome = novoNome;
         } else if (tipoPessoa == 2) {
-            locatario.nome = string(abi.encodePacked(keccak256(bytes(novoNome))));
+            locatario.nome = novoNome;
         }
     }
 
@@ -64,9 +65,11 @@ contract ContratoAluguel is Ownable {
         }
     }
 
-    function pagarAluguel(uint256 mes) public {
+    function pagarAluguel(uint256 mes, uint256 salt) public {
         require(!pagamentos[mes - 1], "Aluguel deste mes ja foi pago.");
         pagamentos[mes - 1] = true;
+
+        provasPagamento[mes - 1] = keccak256(abi.encodePacked(msg.sender, mes, salt));
     }
 
     function verificarPagamento(uint256 mes) public view returns (bool) {
