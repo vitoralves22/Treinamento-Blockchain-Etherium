@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// Endereço: 0x0c3c1a615A4910fe9ce815085f2fE24Cb48a8542
+// Endereço: 0xacD2a3a00293D3be18E7c5A9e597c3d7C071fd79
 
 pragma solidity 0.8.20;
 
@@ -11,7 +11,7 @@ contract Ownable {
     }
 
     modifier onlyOwner() {
-        require(msg.sender == owner, "Somente o proprietário pode chamar essa função.");
+        require(msg.sender == owner, "Somente o proprietario pode chamar essa funcao.");
         _;
     }
 }
